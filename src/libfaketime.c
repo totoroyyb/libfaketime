@@ -3714,6 +3714,10 @@ abort:
   pthread_cleanup_pop(1);
 #endif
   // came here via goto abort?
+  if (tp->tv_nsec > 999999999) {
+    tp->tv_sec += tp->tv_nsec / 1000000000;
+    tp->tv_nsec = tp->tv_nsec % 1000000000;    
+  }
   if (ret != INT_MAX) return ret;
   save_time(tp);
 
